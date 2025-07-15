@@ -10,7 +10,7 @@ app.use(express.json());
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
-    const privateKey= process.env.FIREBASE_PRIVATE_KEY
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL
   })
 });
@@ -18,7 +18,7 @@ const db = admin.firestore();
 
 app.post('/checkout', async (req, res) => {
   try {
-    const { items, customer, payment_method_id } = req.body;
+    const { items, customer } = req.body;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: items.map(item => ({
@@ -32,7 +32,6 @@ app.post('/checkout', async (req, res) => {
       mode: 'payment',
       success_url: 'https://britishbaccy.com/success',
       cancel_url: 'https://britishbaccy.com/checkout.html',
-      payment_method: payment_method_id,
       customer_email: customer.email
     });
     const orderId = `#${Math.floor(1000 + Math.random() * 9000)}`;
