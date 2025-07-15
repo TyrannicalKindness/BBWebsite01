@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BritishBaccy Tobacco Store</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="launch-banner" class="launch-banner">
+    Welcome to the Launch of our Business! Enjoy our Launch Sale Prices!
+  </div>
+  <header>
+    <div class="branding">
+      <h1>BB</h1>
+      <p class="established">Established since 2025</p>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="tobacco-policy.html">Tobacco Policy</a>
+      <button id="cart-button" aria-label="View Cart">
+        Cart (<span id="cart-count">0</span>)
+      </button>
+    </nav>
+  </header>
+  <main>
+    <h1>Welcome to BritishBaccy</h1>
+    <p>Explore our premium tobacco products. Must be 18+ to purchase.</p>
+    <div id="products" class="product-list">
+      <!-- Products will be populated by main.js -->
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 BritishBaccy. <a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a> | <a href="tobacco-policy.html">Tobacco Policy</a></p>
+  </footer>
+  <div id="age-verification" class="age-verification" style="display:none;">
+    <p>Are you 18 or older?</p>
+    <input type="checkbox" id="age-check" /> I am 18+
+    <button onclick="verifyAge()">Confirm</button>
+  </div>
+  <script src="js/main.js"> </script>
+</body>
+</html>

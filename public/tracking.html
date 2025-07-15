@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Order Tracking - BritishBaccy</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="tobacco-policy.html">Tobacco Policy</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Track Your Order</h1>
+    <form id="tracking-form">
+      <label for="order-id">Order Number (e.g., #1001):</label>
+      <input type="text" id="order-id" name="order-id" required />
+      <button type="submit">Track</button>
+    </form>
+    <section id="order-details" style="display:none;">
+      <h2>Order Details</h2>
+      <div id="items"></div>
+      <p>Royal Mail Tracking Number: <span id="tracking-number"></span></p>
+      <a id="tracking-link" href="#" target="_blank" rel="noopener">Track on Royal Mail</a>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 BritishBaccy. <a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a> | <a href="tobacco-policy.html">Tobacco Policy</a></p>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

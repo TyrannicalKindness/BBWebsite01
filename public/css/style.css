@@ -1,0 +1,229 @@
+/* General Reset and Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #000;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  line-height: 1.6;
+}
+
+/* Launch Banner */
+.launch-banner {
+  background-color: red;
+  color: yellow;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 30s;
+}
+
+/* Fade out animation for banner */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Header and Navigation */
+header {
+  margin-top: 3.5rem; /* To avoid overlap with fixed banner */
+  margin-bottom: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: gold;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 1px solid gold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover,
+nav a:focus {
+  background-color: gold;
+  color: black;
+  outline: none;
+}
+
+/* Main Content */
+main h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: gold;
+  text-align: center;
+}
+
+main p {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+/* Product List */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  background-color: #111;
+  border: 1px solid gold;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.product-card img {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+.product-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: gold;
+}
+
+.product-card p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.product-card button {
+  background-color: gold;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-card button:hover,
+.product-card button:focus {
+  background-color: #ccaa00;
+  outline: none;
+}
+
+/* Footer */
+footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+footer a {
+  color: gold;
+  text-decoration: none;
+}
+
+footer a:hover,
+footer a:focus {
+  text-decoration: underline;
+  outline: none;
+}
+
+/* Age Verification Popup */
+.age-verification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 1rem;
+  text-align: center;
+}
+
+.age-verification p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: gold;
+}
+
+.age-verification input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.age-verification button {
+  margin-top: 1rem;
+  background-color: gold;
+  color: black;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.age-verification button:hover,
+.age-verification button:focus {
+  background-color: #ccaa00;
+  outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+
+  main h1 {
+    font-size: 1.5rem;
+  }
+}
