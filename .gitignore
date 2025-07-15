@@ -71,3 +71,4 @@ node_modules/
 # Ignore Firebase service account keys
 server/bbwebsite01-firebase-adminsdk-fbsvc-f632e6e087.json
 functions/bbwebsite01-firebase-adminsdk-fbsvc-f632e6e087.json
+/public/
