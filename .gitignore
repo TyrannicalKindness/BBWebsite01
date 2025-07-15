@@ -67,3 +67,7 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Ignore Firebase service account keys
+server/bbwebsite01-firebase-adminsdk-fbsvc-f632e6e087.json
+functions/bbwebsite01-firebase-adminsdk-fbsvc-f632e6e087.json
