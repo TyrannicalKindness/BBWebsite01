@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BritishBaccy Cart</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Cart item and summary styles */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 16px 0;
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #FFD60044;
+      transition: box-shadow 0.3s ease;
+    }
+    .cart-item:hover {
+      box-shadow: 0 8px 32px #FFD60088;
+    }
+    .cart-item-info {
+      flex: 1;
+      min-width: 220px;
+    }
+    .cart-item-info h3 {
+      font-weight: 700;
+      color: #FFD600;
+      margin-bottom: 6px;
+      font-size: 1.1rem;
+      text-shadow: 0 0 6px #FFD600bb;
+    }
+    .cart-item-info p {
+      font-size: 1rem;
+      color: #f5f5f5;
+      margin-bottom: 8px;
+    }
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .quantity-controls button {
+      background: #333;
+      color: #FFD600;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      transition: background 0.3s ease;
+    }
+    .quantity-controls button:hover {
+      background: #FFD600;
+      color: #111;
+    }
+    .quantity-controls span {
+      min-width: 36px;
+      text-align: center;
+      font-weight: 700;
+      color: #FFD600;
+      font-size: 1.1rem;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .save-btn, .remove-btn {
+      background: none;
+      border: 2px solid #FFD600;
+      color: #FFD600;
+      border-radius: 10px;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .save-btn:hover, .remove-btn:hover {
+      background: #FFD600;
+      color: #111;
+    }
+    .cart-summary {
+      margin-top: 32px;
+      padding: 32px;
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #FFD60044;
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #FFD600;
+      text-shadow: 0 0 8px #FFD600bb;
+    }
+    #checkout-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px #FFD600aa;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    #checkout-btn:hover {
+      background: linear-gradient(135deg, #FFF700, #C7A100);
+      box-shadow: 0 12px 48px #FFD600dd;
+      color: #111;
+    }
+    /* Checkout popup styles */
+    #checkout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #FFD60044;
+      z-index: 1000;
+      color: #f5f5f5;
+      width: 80%;
+      max-width: 500px;
+    }
+    #checkout-popup h2 {
+      color: #FFD600;
+      text-align: center;
+    }
+    #checkout-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #FFD600;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    #checkout-popup .close-btn:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="launch-banner" class="launch-banner">
+    Welcome to the Launch of our Business! Enjoy our Launch Sale Prices!
+  </div>
+  <header>
+    <div class="branding">
+      <h1>BB</h1>
+      <p class="established">Established since 2025</p>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="cart.html" id="cart-btn" class="cart-btn" aria-label="View cart" style="order: 6; margin-left: auto; text-decoration: none;">
+        <img src="cart-modern.svg" alt="Cart" class="cart-icon" />
+        <span id="cart-count" class="cart-count">0</span>
+      </a>
+      <a href="tobacco-policy.html">Tobacco Policy</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Shopping Cart</h1>
+    <div id="cart-items" class="cart-items">
+      <!-- Cart items will be dynamically added here -->
+    </div>
+    <div class="cart-summary">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total">£0.00</span>
+      </div>
+      <button id="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+    </div>
+  </main>
+
+  <!-- Checkout Popup -->
+  <div id="checkout-popup">
+    <button class="close-btn" onclick="closeCheckoutPopup()">×</button>
+    <h2>Checkout Details</h2>
+    <div id="checkout-items"></div>
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="checkout-total">£0.00</span>
+    </div>
+    <button id="pay-btn" onclick="checkoutNow()">Pay Now</button>
+  </div>
+
+  <footer>
+    <p>© 2025 BritishBaccy. <a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a> | <a href="tobacco-policy.html">Tobacco Policy</a></p>
+  </footer>
+  <div id="age-verification" class="age-verification" style="display:none;">
+    <p>Are you 18 or older?</p>
+    <input type="checkbox" id="age-check" /> I am 18+
+    <button onclick="verifyAge()">Confirm</button>
+  </div>
+
+  <script>
+    // Cart logic
+    const cartCount = document.getElementById('cart-count');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutPopup = document.getElementById('checkout-popup');
+    const checkoutItems = document.getElementById('checkout-items');
+    const checkoutTotal = document.getElementById('checkout-total');
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem('cart') || '[]');
+    }
+
+    function setCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      let count = 0;
+      for (const item of cart) count += item.quantity || 1;
+      cartCount.textContent = count;
+      updateCartDisplay();
+    }
+
+    function addToCart(product) {
+      const cart = getCart();
+      const existingIndex = cart.findIndex(item => item.name === product.name);
+      if (existingIndex >= 0) {
+        cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+      } else {
+        product.quantity = 1;
+        cart.push(product);
+      }
+      setCart(cart);
+    }
+
+    function removeFromCart(index) {
+      const cart = getCart();
+      cart.splice(index, 1);
+      setCart(cart);
+    }
+
+    function updateQuantity(index, newQuantity) {
+      const cart = getCart();
+      if (newQuantity > 0) {
+        cart[index].quantity = newQuantity;
+        setCart(cart);
+      } else {
+        removeFromCart(index);
+      }
+    }
+
+    function saveForLater(index) {
+      const cart = getCart();
+      const product = cart[index];
+      const savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+      savedItems.push(product);
+      localStorage.setItem('savedItems', JSON.stringify(savedItems));
+      removeFromCart(index);
+    }
+
+    function updateCartDisplay() {
+      const cart = getCart();
+      if (!cartItems || !cartTotal) return;
+
+      cartItems.innerHTML = cart.length ? cart.map((item, index) => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <h3>${item.name}</h3>
+            <p>£${item.price.toFixed(2)} each</p>
+          </div>
+          <div class="cart-item-actions">
+            <div class="quantity-controls">
+              <button onclick="updateQuantity(${index}, ${cart[index].quantity - 1})">-</button>
+              <span>${cart[index].quantity}</span>
+              <button onclick="updateQuantity(${index}, ${cart[index].quantity + 1})">+</button>
+            </div>
+            <div class="action-buttons">
+              <button onclick="saveForLater(${index})" class="save-btn">Save for Later</button>
+              <button onclick="removeFromCart(${index})" class="remove-btn">Remove</button>
+            </div>
+          </div>
+        </div>
+      `).join('') : '<p>Your cart is empty</p>';
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      cartTotal.textContent = `£${total.toFixed(2)}`;
+    }
+
+    function proceedToCheckout() {
+      const cart = getCart();
+      if (!cart.length) return alert('Your cart is empty!');
+      showCheckoutPopup(cart);
+    }
+
+    function showCheckoutPopup(cart) {
+      checkoutItems.innerHTML = cart.map(item => `
+        <div>${item.name} - £${(item.price * item.quantity).toFixed(2)} (x${item.quantity})</div>
+      `).join('');
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      checkoutTotal.textContent = `£${total.toFixed(2)}`;
+      checkoutPopup.style.display = 'block';
+    }
+
+    function closeCheckoutPopup() {
+      checkoutPopup.style.display = 'none';
+    }
+
+    function checkoutNow() {
+      const cart = getCart();
+      if (!cart.length) return alert('Cart is empty.');
+      alert(`Payment processing for £${checkoutTotal.textContent}. Redirect to payment gateway would occur here.`);
+      localStorage.removeItem('cart');
+      setCart([]);
+      closeCheckoutPopup();
+    }
+
+    // Initialize cart
+    updateCartDisplay();
+
+    // Age verification
+    function verifyAge() {
+      if (document.getElementById('age-check').checked) {
+        document.getElementById('age-verification').style.display = 'none';
+      } else {
+        alert('You must be 18+ to proceed.');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -63,14 +63,17 @@ function verifyAge() {
 }
 
 function checkAgeVerification() {
+  const ageVerificationElem = document.getElementById('age-verification');
+  if (!ageVerificationElem) return;
   if (localStorage.getItem('ageVerified') === 'true') {
-    document.getElementById('age-verification').style.display = 'none';
+    ageVerificationElem.style.display = 'none';
   } else {
-    document.getElementById('age-verification').style.display = 'flex';
+    ageVerificationElem.style.display = 'flex';
   }
 }
 
 // Cart functionality
+
 function getCart() {
   const cart = localStorage.getItem('cart');
   return cart ? JSON.parse(cart) : [];
@@ -118,6 +121,7 @@ function populateProducts() {
   const container = document.getElementById('products') || document.getElementById('product-list');
   if (!container) return;
   container.innerHTML = '';
+  // Render products once to remove duplicates
   products.forEach(product => {
     const productCard = document.createElement('div');
     productCard.className = 'product-card';
@@ -184,10 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
     trackingForm.addEventListener('submit', handleTracking);
   }
 
-  const cartButton = document.getElementById('cart-button');
+  const cartButton = document.getElementById('cart-btn');
   if (cartButton) {
     cartButton.addEventListener('click', () => {
-      window.location.href = 'checkout.html';
+      window.location.href = 'cart.html';
     });
   }
 });

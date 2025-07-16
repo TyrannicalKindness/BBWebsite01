@@ -5,7 +5,250 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BritishBaccy Tobacco Store</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Cart button styles from single file */
+    #cart-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFD600;
+      border: 3px solid #FFD600;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px #FFD60044, 0 4px 24px #FFD60022 inset, 0 1px 0 rgba(157, 157, 157, 0.533) inset, 0 0 0 3px rgba(191, 163, 3, 0.74) inset, 0 2px 8px #ff0000b5, 0 0 24px 0 #48ff0086;
+      color: #111;
+      font-weight: 600;
+      font-size: 1rem;
+      min-height: 25px;
+      min-width: 25px;
+      padding: 5px 5px;
+      margin: 0 0 0 8px;
+      cursor: pointer;
+      transition: box-shadow .3s, background .3s, color .2s, transform .2s;
+      user-select: none;
+      outline: none;
+    }
+    #cart-btn:hover, #cart-btn:focus {
+      background: #FFD600;
+      color: #000;
+      box-shadow: 0 8px 32px #FFD600cc, 0 2px 8px #FFD60044, 0 1px 0 #fff8 inset, 0 0 0 3px #fff8 inset, 0 2px 8px #FFD600, 0 0 32px 0 #FFD60055;
+      transform: translateY(-2px) scale(1.06);
+      border-color: #FFD600;
+      filter: brightness(1.15) drop-shadow(0 0 16px #FFD60088);
+    }
+    /* Cart item and summary styles from old site */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 16px 0;
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #FFD60044;
+      transition: box-shadow 0.3s ease;
+    }
+    .cart-item:hover {
+      box-shadow: 0 8px 32px #FFD60088;
+    }
+    .cart-item-info {
+      flex: 1;
+      min-width: 220px;
+    }
+    .cart-item-info h3 {
+      font-weight: 700;
+      color: #FFD600;
+      margin-bottom: 6px;
+      font-size: 1.1rem;
+      text-shadow: 0 0 6px #FFD600bb;
+    }
+    .cart-item-info p {
+      font-size: 1rem;
+      color: #f5f5f5;
+      margin-bottom: 8px;
+    }
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .quantity-controls button {
+      background: #333;
+      color: #FFD600;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      transition: background 0.3s ease;
+    }
+    .quantity-controls button:hover {
+      background: #FFD600;
+      color: #111;
+    }
+    .quantity-controls span {
+      min-width: 36px;
+      text-align: center;
+      font-weight: 700;
+      color: #FFD600;
+      font-size: 1.1rem;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .save-btn, .remove-btn {
+      background: none;
+      border: 2px solid #FFD600;
+      color: #FFD600;
+      border-radius: 10px;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .save-btn:hover, .remove-btn:hover {
+      background: #FFD600;
+      color: #111;
+    }
+    .cart-summary {
+      margin-top: 32px;
+      padding: 32px;
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #FFD60044;
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #FFD600;
+      text-shadow: 0 0 8px #FFD600bb;
+    }
+    #checkout-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px #FFD600aa;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    #checkout-btn:hover {
+      background: linear-gradient(135deg, #FFF700, #C7A100);
+      box-shadow: 0 12px 48px #FFD600dd;
+      color: #111;
+    }
+    /* Checkout popup styles */
+    #checkout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #FFD60044;
+      z-index: 1000;
+      color: #f5f5f5;
+      width: 80%;
+      max-width: 500px;
+    }
+    #checkout-popup h2 {
+      color: #FFD600;
+      text-align: center;
+    }
+    #checkout-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #FFD600;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    #checkout-popup .close-btn:hover {
+      color: #fff;
+    }
+    /* Product card styles for homepage */
+    .product-card {
+      display: inline-block;
+      vertical-align: top;
+      width: 280px;
+      margin: 20px;
+      background: linear-gradient(145deg, #1a1a1a, #222222);
+      border-radius: 24px;
+      box-shadow: 0 8px 48px #FFD60044;
+      padding: 28px 20px 24px 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 12px 64px #FFD600aa;
+    }
+    .product-card img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      border-radius: 16px;
+      background: #222;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 24px #FFD60066;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover img {
+      transform: scale(1.1);
+    }
+    .product-card h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #FFD600;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #FFD600bb;
+    }
+    .product-card p {
+      font-size: 1rem;
+      color: #f5f5f5;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .product-card button {
+      background: linear-gradient(90deg, #FFD600 60%, #C7A100 100%);
+      color: #111;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 0;
+      margin: 8px 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      width: 90%;
+      cursor: pointer;
+      box-shadow: 0 6px 16px #FFD60066;
+      transition: box-shadow .5s, background .4s, color .3s, transform .3s;
+    }
+    .product-card button:hover {
+      box-shadow: 0 8px 32px #FFD600aa;
+    }
+    .product-card button:active {
+      background: linear-gradient(90deg, #C7A100 60%, #FFD600 100%);
+      color: #000;
+      transform: scale(0.98);
+    }
+  </style>
 </head>
+
 <body>
   <div id="launch-banner" class="launch-banner">
     Welcome to the Launch of our Business! Enjoy our Launch Sale Prices!
@@ -18,31 +261,108 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
-      <a href="checkout.html">Checkout</a>
       <a href="tracking.html">Tracking</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
-      <a href="tobacco-policy.html">Tobacco Policy</a>
-      <button id="cart-button" aria-label="View Cart">
-        Cart (<span id="cart-count">0</span>)
+      <button id="cart-btn" class="cart-btn" aria-label="View cart" style="order: 6; margin-left: auto;">
+        <img src="cart-modern.svg" alt="Cart" class="cart-icon" />
+        <span id="cart-count" class="cart-count">0</span>
       </button>
+      <a href="tobacco-policy.html">Tobacco Policy</a>
     </nav>
   </header>
   <main>
     <h1>Welcome to BritishBaccy</h1>
     <p>Explore our premium tobacco products. Must be 18+ to purchase.</p>
     <div id="products" class="product-list">
-      <!-- Products will be populated by main.js -->
+      <div class="product-card">
+        <img src="amberleafuk.jpg" alt="Amber Leaf 50g (UK)">
+        <h2>Amber Leaf 50g (UK)</h2>
+        <p>Classic British rolling tobacco. Smooth, fresh, rich aroma.</p>
+        <p>£19.99</p>
+        <button onclick="addToCart({name: 'Amber Leaf 50g (UK)', price: 19.99})">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="amberleafbelgium.jpg" alt="Amber Leaf 50g (Belgium)">
+        <h2>Amber Leaf 50g (Belgium)</h2>
+        <p>Continental blend, mellow, unbeatable price.</p>
+        <p>£16.99</p>
+        <button onclick="addToCart({name: 'Amber Leaf 50g (Belgium)', price: 16.99})">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="rothmans.jpg" alt="Rothmans Cigarettes">
+        <h2>Rothmans Cigarettes</h2>
+        <p>Refined, full-bodied flavour. Premium quality.</p>
+        <p>£12.99</p>
+        <button onclick="addToCart({name: 'Rothmans Cigarettes', price: 12.99})">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="goldenvirginia.jpg" alt="Golden Virginia 50g">
+        <h2>Golden Virginia 50g</h2>
+        <p>Smooth, classic, and aromatic. A UK favourite.</p>
+        <p>£20.49</p>
+        <button onclick="addToCart({name: 'Golden Virginia 50g', price: 20.49})">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="silkcut.jpg" alt="Silk Cut Cigarettes">
+        <h2>Silk Cut Cigarettes</h2>
+        <p>Light, smooth, and easy. For the discerning smoker.</p>
+        <p>£13.49</p>
+        <button onclick="addToCart({name: 'Silk Cut Cigarettes', price: 13.49})">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="bensongold.jpg" alt="Benson & Hedges Gold">
+        <h2>Benson & Hedges Gold</h2>
+        <p>Premium taste, iconic British brand.</p>
+        <p>£14.99</p>
+        <button onclick="addToCart({name: 'Benson & Hedges Gold', price: 14.99})">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="marlborored.jpg" alt="Marlboro Red">
+        <h2>Marlboro Red</h2>
+        <p>Bold, rich, and world-renowned.</p>
+        <p>£15.99</p>
+        <button onclick="addToCart({name: 'Marlboro Red', price: 15.99})">Add to Cart</button>
+      </div>
     </div>
   </main>
+
+  <!-- Cart Section -->
+  <main id="cart" class="site-section" style="display:none;">
+    <h1>Shopping Cart</h1>
+    <div id="cart-items" class="cart-items">
+      <!-- Cart items will be dynamically added here -->
+    </div>
+    <div class="cart-summary">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total">£0.00</span>
+      </div>
+      <button id="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+    </div>
+  </main>
+
+  <!-- Checkout Popup -->
+  <div id="checkout-popup">
+    <button class="close-btn" onclick="closeCheckoutPopup()">×</button>
+    <h2>Checkout Details</h2>
+    <div id="checkout-items"></div>
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="checkout-total">£0.00</span>
+    </div>
+    <button id="pay-btn" onclick="checkoutNow()">Pay Now</button>
+  </div>
+
   <footer>
-    <p>&copy; 2025 BritishBaccy. <a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a> | <a href="tobacco-policy.html">Tobacco Policy</a></p>
+    <p>© 2025 BritishBaccy. <a href="terms.html">Terms</a> | <a href="privacy.html">Privacy</a> | <a href="tobacco-policy.html">Tobacco Policy</a></p>
   </footer>
   <div id="age-verification" class="age-verification" style="display:none;">
     <p>Are you 18 or older?</p>
     <input type="checkbox" id="age-check" /> I am 18+
     <button onclick="verifyAge()">Confirm</button>
   </div>
-  <script src="js/main.js"> </script>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
