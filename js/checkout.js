@@ -1,5 +1,3 @@
-// checkout.js - Handles Stripe Elements payment and form submission
-
 document.addEventListener('DOMContentLoaded', () => {
   const stripe = Stripe('pk_live_51Rg3n2FphX9gu7mJKsh3Q4yoA4PyLZXcs4kuUs4KJueDstyGIMZcmGHmuaWXrVzrs9fBRVByOfAEYpjeFbrlDkzI00weWvGWBt'); // Replace with your Stripe publishable key
   const elements = stripe.elements();
@@ -58,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Send checkout data to server
-      const response = await fetch('/checkout', {
+      const response = await fetch('https://bbwebsite01.cloudfunctions.net/app/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
